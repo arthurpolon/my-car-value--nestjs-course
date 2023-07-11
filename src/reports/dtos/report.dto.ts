@@ -18,8 +18,10 @@ export class ReportDto {
   model: string
   @Expose()
   mileage: number
+  @Expose()
+  approved: boolean
 
   @Expose()
-  @Transform(({ obj }) => (obj.user as User).id)
+  @Transform(({ obj }) => obj.user?.id)
   userId: number
 }

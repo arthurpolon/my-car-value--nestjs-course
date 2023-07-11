@@ -11,3 +11,11 @@ Content-Type: application/json
   "lat": 0,
   "price": 500000
 }
+
+### Update 'approved' property in Report
+PATCH http://localhost:3000/reports/8
+Content-Type: application/json
+
+{
+  "approve": true
+}
