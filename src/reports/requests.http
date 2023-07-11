@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "make": "toyota",
-  "model": "corolla",
+  "model": "corolla2",
   "year": 1980,
   "mileage": 100000,
   "lng": 0,
@@ -13,9 +13,12 @@ Content-Type: application/json
 }
 
 ### Update 'approved' property in Report
-PATCH http://localhost:3000/reports/1
+PATCH http://localhost:3000/reports/2
 Content-Type: application/json
 
 {
   "approve": true
 }
+
+### Get estimate for vehicle
+GET http://localhost:3000/reports?make=toyota&model=corolla&lng=0&lat=0&mileage=20000&year=1980
