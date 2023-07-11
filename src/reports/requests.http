@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### Update 'approved' property in Report
-PATCH http://localhost:3000/reports/8
+PATCH http://localhost:3000/reports/1
 Content-Type: application/json
 
 {
