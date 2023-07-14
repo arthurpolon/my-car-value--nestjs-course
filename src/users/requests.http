@@ -32,9 +32,9 @@ GET http://localhost:3000/auth?email=a@a.com
 DELETE http://localhost:3000/auth/4
 
 ### Update user by id
-PATCH http://localhost:3000/auth/4
+PATCH http://localhost:3000/auth/1
 Content-Type: application/json
 
 {
-  "email": "a@a.com"
+  "admin": true
 }

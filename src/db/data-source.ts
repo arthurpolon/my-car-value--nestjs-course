@@ -1,4 +1,4 @@
-import { DataSource, DataSourceOptions } from 'typeorm'
+import { DataSource, DataSourceOptions as TOptions } from 'typeorm'
 import * as dotenv from 'dotenv'
 import * as path from 'path'
 
@@ -6,41 +6,40 @@ dotenv.config({
   path: path.resolve(process.cwd(), `.env.${process.env.NODE_ENV}`),
 })
 
-export const dataSourceOptions: DataSourceOptions = (() => {
-  switch (process.env.NODE_ENV) {
-    case 'development': {
-      return {
-        type: 'sqlite',
-        database: process.env.DB_NAME || 'db.sqlite',
-        entities: [__dirname + '/../**/*.entity.{js,ts}'],
-        migrations: ['dist/db/migrations/*.js'],
-        migrationsRun: true,
-      }
-    }
-    case 'test': {
-      return {
-        type: 'sqlite',
-        database: process.env.DB_NAME || 'db.sqlite',
-        entities: [__dirname + '/../**/*.entity.{js,ts}'],
-        migrations: ['dist/db/migrations/*.js'],
-        migrationsRun: true,
-      }
-    }
-    case 'production': {
-      return {
-        type: 'postgres',
-        url: process.env.DATABASE_URL,
-        ssl: {
-          rejectUnauthorized: false,
-        },
-        entities: [__dirname + '/../**/*.entity.{js,ts}'],
-        migrations: ['dist/db/migrations/*.js'],
-        migrationsRun: true,
-      }
-    }
-    default:
-      throw new Error('unknown environment')
+export const dataSourceOptions: TOptions = (() => {
+  if (!process.env.NODE_ENV) throw new Error('unknown environment')
+
+  const common: TOptions = {
+    type: 'postgres',
+    url: process.env.DATABASE_URL,
+    entities: [__dirname + '/../**/*.entity.{js,ts}'],
+    migrations: ['dist/db/migrations/*.js'],
+    migrationsRun: true,
   }
+
+  const development: TOptions = {
+    ...common,
+  }
+
+  const test: TOptions = {
+    ...common,
+    dropSchema: true,
+  }
+
+  const production: TOptions = {
+    ssl: {
+      rejectUnauthorized: false,
+    },
+    ...common,
+  }
+
+  const options: Record<NodeJS.ProcessEnv['NODE_ENV'], TOptions> = {
+    development,
+    test,
+    production,
+  }
+
+  return options[process.env.NODE_ENV]
 })()
 
 const dataSource = new DataSource(dataSourceOptions)

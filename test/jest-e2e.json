@@ -6,6 +6,5 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "moduleDirectories": ["<rootDir>/../", "node_modules"],
-  "setupFilesAfterEnv": ["<rootDir>/setup.ts"]
+  "moduleDirectories": ["<rootDir>/../", "node_modules"]
 }
