@@ -13,6 +13,7 @@ export const dataSourceOptions: TOptions = (() => {
 
   const development: TOptions = {
     ...common,
+    url: 'postgresql://admin:secret@localhost:5432/db',
   }
 
   const test: TOptions = {
